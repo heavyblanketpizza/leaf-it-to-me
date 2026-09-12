@@ -2,7 +2,7 @@
 
 [English](README.md) | 한국어
 
-![사과, 체리, 망고, 오렌지, 복숭아나무의 야외 사진과 각 과일을 나타내는 컬러 아이콘.](docs/assets/leaf-it-to-me-banner.webp)
+![사과, 체리, 망고, 오렌지, 복숭아나무의 사진과 각 과일을 나타내는 컬러 아이콘.](docs/assets/leaf-it-to-me-banner.webp)
 
 **사과·체리·망고·오렌지·복숭아나무의 잎 사진으로 나무 종류와 잎의 상태를
 분류하는 Python 실험 프로젝트**입니다. 가벼운 이미지 분류 모델인 MobileNetV4를
