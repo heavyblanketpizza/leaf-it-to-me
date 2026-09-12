@@ -25,7 +25,7 @@ PyTorch와 timm으로 학습합니다.
     <tr><td nowrap><strong>사과</strong></td><td>정상, 검은별무늬병(scab), 검은썩음병(black rot), 붉은별무늬병(cedar apple rust), 복합 병해(multiple diseases)</td></tr>
     <tr><td nowrap><strong>체리</strong></td><td>정상, 흰가루병(powdery mildew)</td></tr>
     <tr><td nowrap><strong>망고</strong></td><td>정상, 탄저병(anthracnose), 세균성 궤양병(bacterial canker), 잎을 자르는 바구미 피해(cutting weevil), 가지마름병(dieback), 혹파리 피해(gall midge), 흰가루병(powdery mildew), 그을음병(sooty mould)</td></tr>
-    <tr><td nowrap><strong>오렌지</strong></td><td>감귤 황룡병(citrus greening)</td></tr>
+    <tr><td nowrap><strong>오렌지</strong></td><td>감귤 황룡병(citrus greening)만 포함 (정상 오렌지 잎 클래스 없음)</td></tr>
     <tr><td nowrap><strong>복숭아</strong></td><td>정상, 세균구멍병(bacterial spot)</td></tr>
   </tbody>
 </table>

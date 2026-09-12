@@ -22,7 +22,7 @@ The model chooses from 18 combinations of fruit-tree type and leaf condition:
 | **Apple** | Healthy, scab, black rot, cedar apple rust, multiple diseases |
 | **Cherry** | Healthy, powdery mildew |
 | **Mango** | Healthy, anthracnose, bacterial canker, cutting weevil, dieback, gall midge, powdery mildew, sooty mould |
-| **Orange** | Citrus greening |
+| **Orange** | Citrus greening only (no healthy-orange class) |
 | **Peach** | Healthy, bacterial spot |
 
 A prediction returns the tree type, condition, combined label, and model score.
