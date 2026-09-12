@@ -41,7 +41,7 @@ def main():
         archive = root / "mangoleafbd-v1.zip.part"
         if archive.exists():
             raise FileExistsError(f"Supply --archive to reuse the existing {archive}")
-        request = urllib.request.Request(DOWNLOAD, headers={"User-Agent": "Orchard-personal-experiment/1.0"})
+        request = urllib.request.Request(DOWNLOAD, headers={"User-Agent": "leaf-it-to-me-personal-experiment/1.0"})
         print("Downloading official MangoLeafBD v1 ZIP...", flush=True)
         with urllib.request.urlopen(request, timeout=120) as response, archive.open("xb") as target:
             while chunk := response.read(1024 * 1024):

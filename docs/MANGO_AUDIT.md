@@ -23,10 +23,10 @@ uv run python merge_datasets.py
 
 The defaults are `--mango-policy deduplicate`, `--seed 42`, and
 `--near-threshold 4`. Preparation reads the source photos and writes its manifest
-and reports under `$ORCHARD_DATA/data/prepared/`. Source image files remain
+and reports under `$LEAFIT_DATA/data/prepared/`. Source image files remain
 unchanged; an excluded photo loses its manifest row, not its file.
 
-The lower-level `uv run python -m orchard prepare` command defaults to
+The lower-level `uv run python -m leafit prepare` command defaults to
 `--mango-policy train-only`. Pass `--mango-policy deduplicate` to that command to
 use the same curation policy as the merge helper.
 
@@ -106,7 +106,7 @@ import root; see [the schema guide](DATASET_SCHEMA.md) for details. For example,
 with your reviewed file saved under the private data folder:
 
 ```bash
-uv run python merge_datasets.py --groups "$ORCHARD_DATA/data/reviewed-groups.csv"
+uv run python merge_datasets.py --groups "$LEAFIT_DATA/data/reviewed-groups.csv"
 ```
 
 To retain the conservative fallback:

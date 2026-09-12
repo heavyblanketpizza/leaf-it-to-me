@@ -2,28 +2,33 @@
 
 [English](README.md) | 한국어
 
-![사과, 체리, 망고, 오렌지, 복숭아나무의 야외 사진과 각 과일을 나타내는 컬러 아이콘.](docs/assets/orchard-banner.webp)
+![사과, 체리, 망고, 오렌지, 복숭아나무의 야외 사진과 각 과일을 나타내는 컬러 아이콘.](docs/assets/leaf-it-to-me-banner.webp)
 
 **사과·체리·망고·오렌지·복숭아나무의 잎 사진으로 나무 종류와 잎의 상태를
 분류하는 Python 실험 프로젝트**입니다. 가벼운 이미지 분류 모델인 MobileNetV4를
 PyTorch와 timm으로 학습합니다.
 
 터미널에서 정답 라벨이 있는 잎 사진을 내려받고, 데이터를 준비하고, 모델을 학습한 뒤
-직접 찍은 사진으로 예측해 볼 수 있습니다. Python 패키지 이름은 `orchard`이므로
-명령어는 `python -m orchard` 형식을 사용합니다.
+직접 찍은 사진으로 예측해 볼 수 있습니다. 패키지 명령어는
+`python -m leafit` 형식으로 실행합니다.
 
 ## 분류할 수 있는 과수와 잎 상태
 
 모델은 과수 종류와 잎 상태를 조합한 18개 항목(클래스) 중 하나를 선택합니다.
 데이터셋의 분류 항목과 대조할 수 있도록 주요 병해충 이름은 영어를 함께 표기했습니다.
 
-| 과수 | 잎 상태 |
-|---|---|
-| **사과** | 정상, 검은별무늬병(scab), 검은썩음병(black rot), 붉은별무늬병(cedar apple rust), 복합 병해(multiple diseases) |
-| **체리** | 정상, 흰가루병(powdery mildew) |
-| **망고** | 정상, 탄저병(anthracnose), 세균성 궤양병(bacterial canker), 잎을 자르는 바구미 피해(cutting weevil), 가지마름병(dieback), 혹파리 피해(gall midge), 흰가루병(powdery mildew), 그을음병(sooty mould) |
-| **오렌지** | 감귤 황룡병(citrus greening) |
-| **복숭아** | 정상, 세균구멍병(bacterial spot) |
+<table>
+  <thead>
+    <tr><th width="100">과수</th><th>잎 상태</th></tr>
+  </thead>
+  <tbody>
+    <tr><td nowrap><strong>사과</strong></td><td>정상, 검은별무늬병(scab), 검은썩음병(black rot), 붉은별무늬병(cedar apple rust), 복합 병해(multiple diseases)</td></tr>
+    <tr><td nowrap><strong>체리</strong></td><td>정상, 흰가루병(powdery mildew)</td></tr>
+    <tr><td nowrap><strong>망고</strong></td><td>정상, 탄저병(anthracnose), 세균성 궤양병(bacterial canker), 잎을 자르는 바구미 피해(cutting weevil), 가지마름병(dieback), 혹파리 피해(gall midge), 흰가루병(powdery mildew), 그을음병(sooty mould)</td></tr>
+    <tr><td nowrap><strong>오렌지</strong></td><td>감귤 황룡병(citrus greening)</td></tr>
+    <tr><td nowrap><strong>복숭아</strong></td><td>정상, 세균구멍병(bacterial spot)</td></tr>
+  </tbody>
+</table>
 
 예측 결과에는 나무 종류, 잎 상태, 둘을 조합한 라벨, 모델 점수가 담깁니다.
 아래는 **출력 형식을 보여 주는 예시이며, 실제 측정 결과가 아닙니다.**
@@ -59,8 +64,8 @@ cp -n .env.example .env
 
 | 설정 | 값 |
 |---|---|
-| `ORCHARD_DATA` | `data/raw`와 `data/prepared`를 둘 상위 폴더입니다. 프로젝트 폴더를 쓰려면 `"."`, 다른 저장 공간을 쓰려면 해당 경로를 입력합니다. |
-| `ORCHARD_IMAGE` | 학습 후 예측할 사진 경로입니다. 예: `"./data/my-leaf.jpg"`. |
+| `LEAFIT_DATA` | `data/raw`와 `data/prepared`를 둘 상위 폴더입니다. 프로젝트 폴더를 쓰려면 `"."`, 다른 저장 공간을 쓰려면 해당 경로를 입력합니다. |
+| `LEAFIT_IMAGE` | 학습 후 예측할 사진 경로입니다. 예: `"./data/my-leaf.jpg"`. |
 
 경로는 따옴표로 감쌉니다. 새 터미널을 열거나 설정을 바꾼 뒤에는 다음 명령어로 불러옵니다.
 
@@ -70,7 +75,7 @@ source .env
 set +a
 ```
 
-이렇게 하면 Python과 `"$ORCHARD_DATA"` 같은 셸 표현식에서 설정값을 사용할 수 있습니다.
+이렇게 하면 Python과 `"$LEAFIT_DATA"` 같은 셸 표현식에서 설정값을 사용할 수 있습니다.
 외장 저장 장치에 데이터를 두었다면 사용하는 동안 연결을 유지하세요.
 
 ## 2. 설치 확인
@@ -78,7 +83,7 @@ set +a
 데이터셋을 내려받기 전에 작은 테스트를 실행합니다.
 
 ```bash
-uv run python -m orchard smoke --no-pretrained --device cpu --output runs/quick-check
+uv run python -m leafit smoke --no-pretrained --device cpu --output runs/quick-check
 ```
 
 이 테스트는 합성 이미지를 만들어 데이터 준비, 학습, 저장, 불러오기, 예측이 이어지는지
@@ -104,18 +109,18 @@ uv run python -m orchard smoke --no-pretrained --device cpu --output runs/quick-
 `.env`를 불러온 상태에서 저장 폴더를 만들고 PlantVillage를 내려받습니다.
 
 ```bash
-mkdir -p "$ORCHARD_DATA/data/raw" "$ORCHARD_DATA/downloads"
-uv run python -m orchard download-plantvillage --output "$ORCHARD_DATA/data/raw/plantvillage"
+mkdir -p "$LEAFIT_DATA/data/raw" "$LEAFIT_DATA/downloads"
+uv run python -m leafit download-plantvillage --output "$LEAFIT_DATA/data/raw/plantvillage"
 ```
 
 Cornell 데이터는 대회 페이지에 로그인하고 규정에 동의한 뒤
 `plant-pathology-2020-fgvc7.zip`을 내려받습니다.
-`ORCHARD_DATA` 아래의 `downloads` 폴더에 저장하고, 라벨이 있는 사진을 가져옵니다.
+`LEAFIT_DATA` 아래의 `downloads` 폴더에 저장하고, 라벨이 있는 사진을 가져옵니다.
 
 ```bash
 uv run python scripts/import_cornell_zip.py \
-  --archive "$ORCHARD_DATA/downloads/plant-pathology-2020-fgvc7.zip" \
-  --output "$ORCHARD_DATA/data/raw/cornell"
+  --archive "$LEAFIT_DATA/downloads/plant-pathology-2020-fgvc7.zip" \
+  --output "$LEAFIT_DATA/data/raw/cornell"
 ```
 
 가져오기 도구는 라벨이 없는 대회 테스트 사진을 제외하고 ZIP 파일은 보관합니다.
@@ -124,7 +129,7 @@ uv run python scripts/import_cornell_zip.py \
 MangoLeafBD를 내려받습니다.
 
 ```bash
-uv run python scripts/download_mangoleafbd.py --output "$ORCHARD_DATA/data/raw/mangoleafbd"
+uv run python scripts/download_mangoleafbd.py --output "$LEAFIT_DATA/data/raw/mangoleafbd"
 ```
 
 이 스크립트는 압축을 푼 파일을 검증한 뒤 임시 ZIP 파일을 삭제합니다.
@@ -139,7 +144,7 @@ uv run python merge_datasets.py
 ```
 
 스크립트는 이미지를 확인하고, 탐지한 복제본을 묶은 뒤
-`"$ORCHARD_DATA/data/prepared"` 아래에 `manifest.csv`, `labels.json`, 검토 보고서를 저장합니다.
+`"$LEAFIT_DATA/data/prepared"` 아래에 `manifest.csv`, `labels.json`, 검토 보고서를 저장합니다.
 원본 사진은 그대로 둡니다.
 
 데이터 준비 단계에서는 최종적으로 남긴 이미지 수와 클래스별 분포를 보고합니다.
@@ -186,15 +191,15 @@ uv run python train.py --output runs/second-try --batch-size 8
 학습 장치는 CUDA, Apple Silicon의 MPS, CPU 순으로 선택합니다.
 CPU를 지정하려면 `--device cpu`를 사용하세요.
 전체 설정은 [학습 안내](docs/TRAINING.md)에 있습니다.
-`--data-root`를 지정하면 `ORCHARD_DATA`보다 우선 적용됩니다.
+`--data-root`를 지정하면 `LEAFIT_DATA`보다 우선 적용됩니다.
 
 ## 5. 예측과 결과 확인
 
-`.env`의 `ORCHARD_IMAGE`에 잎 사진 경로를 입력하고 설정을 다시 불러옵니다.
+`.env`의 `LEAFIT_IMAGE`에 잎 사진 경로를 입력하고 설정을 다시 불러옵니다.
 저장된 모델로 예측합니다.
 
 ```bash
-uv run python -m orchard predict --checkpoint runs/weekend/best.pt --image "$ORCHARD_IMAGE"
+uv run python -m leafit predict --checkpoint runs/weekend/best.pt --image "$LEAFIT_IMAGE"
 ```
 
 저장된 학습 결과를 보고서와 학습 곡선 그래프로 정리하려면 다음 명령어를 실행합니다.
@@ -221,8 +226,8 @@ uv run python scripts/summarize_training.py --run runs/weekend
 저장된 모델을 다시 평가하려면 다음 명령어를 사용합니다.
 
 ```bash
-uv run python -m orchard evaluate --checkpoint runs/weekend/best.pt \
-  --manifest "$ORCHARD_DATA/data/prepared/manifest.csv" --output runs/evaluation
+uv run python -m leafit evaluate --checkpoint runs/weekend/best.pt \
+  --manifest "$LEAFIT_DATA/data/prepared/manifest.csv" --output runs/evaluation
 ```
 
 데이터셋을 다른 위치로 옮겼다면 `.env`를 수정하고 설정을 다시 불러온 뒤,
@@ -267,7 +272,8 @@ uv run python -m orchard evaluate --checkpoint runs/weekend/best.pt \
 
 개인 학습 프로젝트로, 직접 작성한 코드와 문서를 [MIT](LICENSE) 라이선스로 공개합니다.
 학습에 사용하는 데이터셋과 사전 학습 가중치에는 각각의 이용 조건이 적용됩니다.
-README 배너에는 MIT 라이선스가 적용되지 않습니다.
+README 배너의 사진과 아이콘은 유료 스톡 이미지 구독을 통해 이용 허락을 받은 자료이며,
+배너에는 이 저장소의 MIT 라이선스가 적용되지 않습니다.
 예측 결과를 시연하는 것과 해당 자료를 배포하는 것은 별개의 사용 행위입니다.
 시연에 원본 이미지를 보여 준다면 그 이미지의 이용 조건을 따라야 합니다.
 [출처별 라이선스 안내](docs/SOURCES.md#license-scope-and-attribution)와
@@ -279,7 +285,7 @@ README 배너에는 MIT 라이선스가 적용되지 않습니다.
 ## 개발
 
 `merge_datasets.py`와 `train.py`부터 살펴보세요.
-`orchard/` 패키지는 데이터 준비, 학습, 평가, 예측을 담당하고,
+`leafit/` 패키지는 데이터 준비, 학습, 평가, 예측을 담당하고,
 `scripts/`에는 데이터 가져오기 도구와 결과 요약 스크립트가 있습니다.
 자동화된 검사는 다음 명령어로 실행합니다.
 

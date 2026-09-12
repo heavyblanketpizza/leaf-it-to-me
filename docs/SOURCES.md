@@ -1,6 +1,6 @@
 # Dataset sources and import guide
 
-Source records were checked on September 12, 2026. The release counts below explain which images are eligible for this project; your preparation `report.json` records the files actually imported and retained on your computer. Store datasets under `data/raw/` inside the `ORCHARD_DATA` folder configured in your private `.env`. See [the verification guide](VALIDATION.md) for checks and [the README](../README.md) for setup and the full workflow.
+Source records were checked on September 12, 2026. The release counts below explain which images are eligible for this project; your preparation `report.json` records the files actually imported and retained on your computer. Store datasets under `data/raw/` inside the `LEAFIT_DATA` folder configured in your private `.env`. See [the verification guide](VALIDATION.md) for checks and [the README](../README.md) for setup and the full workflow.
 
 Commands below run from the project folder after setup. Load your private settings and create the storage folders (connect your drive first if using external storage):
 
@@ -8,7 +8,7 @@ Commands below run from the project folder after setup. Load your private settin
 set -a
 source .env
 set +a
-mkdir -p "$ORCHARD_DATA/data/raw" "$ORCHARD_DATA/downloads"
+mkdir -p "$LEAFIT_DATA/data/raw" "$LEAFIT_DATA/downloads"
 ```
 
 ## License scope and attribution
@@ -22,7 +22,10 @@ the demonstration and the terms for any source images shown. Dataset licenses
 do not automatically become the model's license; [Creative Commons' AI guidance](https://creativecommons.org/using-cc-licensed-works-for-ai-training-2/)
 explains when copyright permission and license conditions apply.
 
-Please credit the original sources:
+The README banner uses photos and icons licensed through a paid stock
+subscription and is excluded from this repository's MIT license.
+
+Please credit the original dataset sources:
 
 - **PlantVillage:** Sharada P. Mohanty, David P. Hughes, and Marcel Salathé (2016),
   [Using Deep Learning for Image-Based Plant Disease Detection](https://doi.org/10.3389/fpls.2016.01419).
@@ -68,7 +71,7 @@ Pinned source revisions: GitHub `7f7ecc7e1eaca78107e3affe7cb5abd9427e139a`; Hugg
 The downloader selects only those nine original RGB directories and official grouping/inventory metadata. It excludes other crops and all grayscale and segmented copies. Download or resume with:
 
 ```bash
-uv run python -m orchard download-plantvillage --output "$ORCHARD_DATA/data/raw/plantvillage"
+uv run python -m leafit download-plantvillage --output "$LEAFIT_DATA/data/raw/plantvillage"
 ```
 
 Downloaded original bytes are preserved. The saved `download_receipt.json` records the selected source revisions and file hashes; the preparation report separately checks readability and grouping.
@@ -101,7 +104,7 @@ duplicate checks provide approximate grouping. The merge script excludes
 exact-pixel copies with conflicting labels and records them in
 `excluded_conflicts.csv`, preserving source files and labels. Use
 `--strict-conflicts` to stop and inspect instead. The lower-level
-`python -m orchard prepare` command stops by default unless given
+`python -m leafit prepare` command stops by default unless given
 `--exclude-conflicting-duplicates`. Neither command invents a corrected label.
 Cornell's `multiple_diseases` remains a separate class; the release does not
 identify individual diseases for those images.
@@ -111,22 +114,22 @@ The [competition rules](https://www.kaggle.com/competitions/plant-pathology-2020
 ### Download and import
 
 1. Sign in to Kaggle and open the competition's [data page](https://www.kaggle.com/competitions/plant-pathology-2020-fgvc7/data). Follow the prompt to review and accept the rules.
-2. Use **Download all files** and save the archive as `$ORCHARD_DATA/downloads/plant-pathology-2020-fgvc7.zip`. Alternatively, authenticate and download with the CLI using the [official API instructions](https://www.kaggle.com/docs/api):
+2. Use **Download all files** and save the archive as `$LEAFIT_DATA/downloads/plant-pathology-2020-fgvc7.zip`. Alternatively, authenticate and download with the CLI using the [official API instructions](https://www.kaggle.com/docs/api):
 
    ```bash
    uvx --from kaggle kaggle auth login
-   uvx --from kaggle kaggle competitions download -c plant-pathology-2020-fgvc7 -p "$ORCHARD_DATA/downloads"
+   uvx --from kaggle kaggle competitions download -c plant-pathology-2020-fgvc7 -p "$LEAFIT_DATA/downloads"
    ```
 
 3. Import either download with the selective helper:
 
    ```bash
-   uv run python scripts/import_cornell_zip.py --archive "$ORCHARD_DATA/downloads/plant-pathology-2020-fgvc7.zip" --output "$ORCHARD_DATA/data/raw/cornell" --delete-archive
+   uv run python scripts/import_cornell_zip.py --archive "$LEAFIT_DATA/downloads/plant-pathology-2020-fgvc7.zip" --output "$LEAFIT_DATA/data/raw/cornell" --delete-archive
    ```
 
 If browser authentication is unavailable, the [official CLI documentation](https://github.com/Kaggle/kaggle-cli/blob/main/docs/README.md) supports a token from [Settings → API](https://www.kaggle.com/settings/api), saved in `~/.kaggle/access_token`. Legacy credentials remain supported: **Legacy API Credentials → Create Legacy API Key**, save `kaggle.json` in `~/.kaggle/`, then `chmod 600 ~/.kaggle/kaggle.json`. Do not put credentials in this repository.
 
-The helper retains `train.csv` and only the training photographs named by its validated public labels. It checks ZIP checksums, image counts and Pillow readability before deleting the supplied ZIP when `--delete-archive` is set; omit that flag to keep the archive. Unlabeled test photos, `test.csv` and submission examples are never extracted. The resulting local import root is `"$ORCHARD_DATA/data/raw/cornell"`. A ZIP saved elsewhere also works by passing its actual path to `--archive`. The README's main preparation command uses all three sources and produces the complete 18-label mapping.
+The helper retains `train.csv` and only the training photographs named by its validated public labels. It checks ZIP checksums, image counts and Pillow readability before deleting the supplied ZIP when `--delete-archive` is set; omit that flag to keep the archive. Unlabeled test photos, `test.csv` and submission examples are never extracted. The resulting local import root is `"$LEAFIT_DATA/data/raw/cornell"`. A ZIP saved elsewhere also works by passing its actual path to `--archive`. The README's main preparation command uses all three sources and produces the complete 18-label mapping.
 
 ## MangoLeafBD v1
 
@@ -136,13 +139,13 @@ The v1 release contains these eight category directories: `Anthracnose`, `Bacter
 [v1 archive](https://data.mendeley.com/public-api/zip/hxsnvwty3r/download/1) with:
 
 ```bash
-uv run python scripts/download_mangoleafbd.py --output "$ORCHARD_DATA/data/raw/mangoleafbd"
+uv run python scripts/download_mangoleafbd.py --output "$LEAFIT_DATA/data/raw/mangoleafbd"
 ```
 
-If an automated request receives HTTP 403, open the dataset page and click **Download All**. Save it as `$ORCHARD_DATA/downloads/mangoleafbd-v1.zip`, then import it:
+If an automated request receives HTTP 403, open the dataset page and click **Download All**. Save it as `$LEAFIT_DATA/downloads/mangoleafbd-v1.zip`, then import it:
 
 ```bash
-uv run python scripts/download_mangoleafbd.py --archive "$ORCHARD_DATA/downloads/mangoleafbd-v1.zip" --output "$ORCHARD_DATA/data/raw/mangoleafbd" --remove-archive
+uv run python scripts/download_mangoleafbd.py --archive "$LEAFIT_DATA/downloads/mangoleafbd-v1.zip" --output "$LEAFIT_DATA/data/raw/mangoleafbd" --remove-archive
 ```
 
 The importer checks ZIP integrity and image readability, preserves source image

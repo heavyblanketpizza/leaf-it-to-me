@@ -2,7 +2,7 @@
 
 English | [한국어](README.ko.md)
 
-![Apple, cherry, mango, orange, and peach: outdoor tree photographs with matching colorful fruit icons.](docs/assets/orchard-banner.webp)
+![Apple, cherry, mango, orange, and peach: outdoor tree photographs with matching colorful fruit icons.](docs/assets/leaf-it-to-me-banner.webp)
 
 A Python experiment that learns to identify **apple, cherry, mango, orange,
 and peach trees from photographs of their leaves**, then classify the leaf's
@@ -10,8 +10,8 @@ condition. It uses MobileNetV4, a small image-classification model, with
 PyTorch and timm.
 
 You run it from a terminal: download labeled leaf photos, prepare the data,
-train a model, and try a photo of your own. The Python package is named
-`orchard`, so its commands use `python -m orchard`.
+train a model, and try a photo of your own. Run the package commands with
+`python -m leafit`.
 
 ## Fruit trees and conditions
 
@@ -59,8 +59,8 @@ Edit these settings in your private `.env`:
 
 | Setting | Value |
 |---|---|
-| `ORCHARD_DATA` | Folder containing `data/raw` and `data/prepared`. Use `"."` for the project folder, or enter your own storage location. |
-| `ORCHARD_IMAGE` | Photo to predict after training, such as `"./data/my-leaf.jpg"`. |
+| `LEAFIT_DATA` | Folder containing `data/raw` and `data/prepared`. Use `"."` for the project folder, or enter your own storage location. |
+| `LEAFIT_IMAGE` | Photo to predict after training, such as `"./data/my-leaf.jpg"`. |
 
 Keep paths quoted. Load the settings in each new terminal and after editing them:
 
@@ -71,14 +71,14 @@ set +a
 ```
 
 This makes the settings available to Python and to shell expressions such as
-`"$ORCHARD_DATA"`. Keep external storage connected while using its datasets.
+`"$LEAFIT_DATA"`. Keep external storage connected while using its datasets.
 
 ## 2. Check the setup
 
 Run a small test before downloading the datasets:
 
 ```bash
-uv run python -m orchard smoke --no-pretrained --device cpu --output runs/quick-check
+uv run python -m leafit smoke --no-pretrained --device cpu --output runs/quick-check
 ```
 
 It creates synthetic pictures and checks preparation, training, saving, loading,
@@ -102,18 +102,18 @@ includes credits, pinned revisions, and manual-download alternatives.
 With `.env` loaded, create the storage folders and download PlantVillage:
 
 ```bash
-mkdir -p "$ORCHARD_DATA/data/raw" "$ORCHARD_DATA/downloads"
-uv run python -m orchard download-plantvillage --output "$ORCHARD_DATA/data/raw/plantvillage"
+mkdir -p "$LEAFIT_DATA/data/raw" "$LEAFIT_DATA/downloads"
+uv run python -m leafit download-plantvillage --output "$LEAFIT_DATA/data/raw/plantvillage"
 ```
 
 For Cornell, sign in to the competition page, accept its rules, and download
 `plant-pathology-2020-fgvc7.zip`. Save it in the `downloads` folder under
-`ORCHARD_DATA`, then import the labeled photos:
+`LEAFIT_DATA`, then import the labeled photos:
 
 ```bash
 uv run python scripts/import_cornell_zip.py \
-  --archive "$ORCHARD_DATA/downloads/plant-pathology-2020-fgvc7.zip" \
-  --output "$ORCHARD_DATA/data/raw/cornell"
+  --archive "$LEAFIT_DATA/downloads/plant-pathology-2020-fgvc7.zip" \
+  --output "$LEAFIT_DATA/data/raw/cornell"
 ```
 
 The importer excludes the unlabeled competition test photos and keeps the ZIP.
@@ -122,7 +122,7 @@ To remove the ZIP after verification, add `--delete-archive`.
 Download MangoLeafBD:
 
 ```bash
-uv run python scripts/download_mangoleafbd.py --output "$ORCHARD_DATA/data/raw/mangoleafbd"
+uv run python scripts/download_mangoleafbd.py --output "$LEAFIT_DATA/data/raw/mangoleafbd"
 ```
 
 This script removes its temporary ZIP after verifying the extracted files.
@@ -138,7 +138,7 @@ uv run python merge_datasets.py
 
 The script checks the images, groups detected copies, and writes
 `manifest.csv`, `labels.json`, and audit reports under
-`"$ORCHARD_DATA/data/prepared"`. Original photos stay in place.
+`"$LEAFIT_DATA/data/prepared"`. Original photos stay in place.
 
 Preparation reports the retained counts and class distributions for your data.
 It excludes exact copies with contradictory labels and keeps one Mango
@@ -183,15 +183,15 @@ uv run python train.py --output runs/second-try --batch-size 8
 
 Device selection tries CUDA, then Apple Silicon MPS, then CPU. Use
 `--device cpu` to request CPU. The [training guide](docs/TRAINING.md) explains
-all settings. `--data-root` overrides `ORCHARD_DATA`.
+all settings. `--data-root` overrides `LEAFIT_DATA`.
 
 ## 5. Predict and review results
 
-Set `ORCHARD_IMAGE` in `.env` to your leaf photo and reload the settings. Use the
+Set `LEAFIT_IMAGE` in `.env` to your leaf photo and reload the settings. Use the
 saved model to predict:
 
 ```bash
-uv run python -m orchard predict --checkpoint runs/weekend/best.pt --image "$ORCHARD_IMAGE"
+uv run python -m leafit predict --checkpoint runs/weekend/best.pt --image "$LEAFIT_IMAGE"
 ```
 
 To turn the saved training results into a report and learning-curve chart:
@@ -217,8 +217,8 @@ label equal weight while accounting for missed examples and wrong predictions.
 To evaluate the saved model again:
 
 ```bash
-uv run python -m orchard evaluate --checkpoint runs/weekend/best.pt \
-  --manifest "$ORCHARD_DATA/data/prepared/manifest.csv" --output runs/evaluation
+uv run python -m leafit evaluate --checkpoint runs/weekend/best.pt \
+  --manifest "$LEAFIT_DATA/data/prepared/manifest.csv" --output runs/evaluation
 ```
 
 If you move the datasets, update `.env`, reload it, and rebuild the manifest
@@ -256,14 +256,16 @@ Raw reports, datasets, and model weights remain excluded from Git.
   model to recognize healthy orange leaves.
 - Mango grouping uses visual similarity and camera metadata. Related photos
   may still cross splits, making test results optimistic.
-- Scores on these datasets do not establish performance in a new garden or
-  orchard. A model score is not a confirmed diagnosis.
+- Scores on these datasets do not establish performance under different
+  growing conditions. A model score is not a confirmed diagnosis.
 
 ## License and scope
 
 This personal learning project shares original code and documentation under
 [MIT](LICENSE). Training uses datasets and pretrained weights under their own
-terms. The README banner is excluded from the MIT license.
+terms.
+The README banner uses photos and icons licensed through a paid stock
+subscription and is excluded from this repository's MIT license.
 Demonstrating predictions is a separate use from distributing those materials;
 follow the terms for any source images shown. See the
 [source guide](docs/SOURCES.md#license-scope-and-attribution), including
@@ -275,7 +277,7 @@ what belongs in Git.
 
 ## Development
 
-Start with `merge_datasets.py` and `train.py`. The `orchard/` package contains
+Start with `merge_datasets.py` and `train.py`. The `leafit/` package contains
 preparation, training, evaluation, and prediction; `scripts/` contains import
 helpers and the results summarizer. Run the automated checks with:
 

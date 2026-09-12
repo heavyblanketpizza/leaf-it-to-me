@@ -9,14 +9,14 @@ import argparse
 import os
 from pathlib import Path
 
-from orchard.prepare import prepare
+from leafit.prepare import prepare
 
 
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--data-root", type=Path, default=Path(os.environ.get("ORCHARD_DATA") or "."),
-        help="Storage folder containing data/raw (default: ORCHARD_DATA, or the current folder)",
+        "--data-root", type=Path, default=Path(os.environ.get("LEAFIT_DATA") or "."),
+        help="Storage folder containing data/raw (default: LEAFIT_DATA, or the current folder)",
     )
     parser.add_argument(
         "--output", type=Path,
@@ -55,7 +55,7 @@ def preparation_arguments(args):
     if missing:
         raise ValueError(
             "Dataset folders are missing:\n  " + "\n  ".join(missing)
-            + "\nCheck that your storage is available. Set ORCHARD_DATA in .env and load it, "
+            + "\nCheck that your storage is available. Set LEAFIT_DATA in .env and load it, "
             "or pass --data-root for the folder containing data/raw."
         )
     cornell_tables = sorted(sources["cornell"].rglob("train.csv"))

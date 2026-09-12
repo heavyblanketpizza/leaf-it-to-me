@@ -1,4 +1,4 @@
-"""Train MobileNetV4 on Orchard's merged CSV using plain PyTorch and timm.
+"""Train MobileNetV4 on Leaf It to Me's merged CSV using plain PyTorch and timm.
 
 Run: uv run --env-file .env python train.py
 Quick real-data check: uv run --env-file .env python train.py --smoke
@@ -9,16 +9,16 @@ import os
 from pathlib import Path
 
 # Set the same project-local model and plotting caches as the other commands.
-import orchard.__main__  # noqa: F401
-from orchard.model import train, training_arguments
+import leafit.__main__  # noqa: F401
+from leafit.model import train, training_arguments
 
 
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     training_arguments(parser)
     parser.set_defaults(manifest=None, labels=None, output=None)
-    parser.add_argument("--data-root", type=Path, default=Path(os.environ.get("ORCHARD_DATA") or "."),
-                        help="Storage folder containing data/prepared (default: ORCHARD_DATA, or the current folder)")
+    parser.add_argument("--data-root", type=Path, default=Path(os.environ.get("LEAFIT_DATA") or "."),
+                        help="Storage folder containing data/prepared (default: LEAFIT_DATA, or the current folder)")
     parser.add_argument("--smoke", action="store_true",
                         help="One training batch in each stage; evaluate full validation/test splits")
     return parser
@@ -37,7 +37,7 @@ def main(argv=None):
     try:
         for name in (args.manifest, args.labels):
             if not Path(name).is_file():
-                raise ValueError(f"Missing prepared dataset file: {name}. Check ORCHARD_DATA or --data-root "
+                raise ValueError(f"Missing prepared dataset file: {name}. Check LEAFIT_DATA or --data-root "
                                  "and run merge_datasets.py first.")
         train(args)
     except (ValueError, OSError) as error:

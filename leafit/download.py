@@ -16,7 +16,7 @@ GH = f"https://raw.githubusercontent.com/spMohanty/PlantVillage-Dataset/{GITHUB_
 
 
 def fetch(url):
-    request = Request(url, headers={"User-Agent": "orchard-weekend-experiment/1"})
+    request = Request(url, headers={"User-Agent": "leaf-it-to-me-weekend-experiment/1"})
     for attempt in range(5):
         try:
             with urlopen(request, timeout=90) as response:

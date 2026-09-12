@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import train as train_cli
-from orchard.model import train, training_data_summary, validate_training_output
+from leafit.model import train, training_data_summary, validate_training_output
 
 
 class TrainingTests(unittest.TestCase):
@@ -19,7 +19,7 @@ class TrainingTests(unittest.TestCase):
         self.root = Path(self.temp.name)
 
     def test_portable_default_without_environment_setting(self):
-        for environment in ({}, {"ORCHARD_DATA": ""}):
+        for environment in ({}, {"LEAFIT_DATA": ""}):
             with self.subTest(environment=environment), patch.dict(os.environ, environment, clear=True):
                 self.assertEqual(train_cli.build_parser().parse_args([]).data_root, Path("."))
 
@@ -29,7 +29,7 @@ class TrainingTests(unittest.TestCase):
             prepared.mkdir(parents=True)
             for filename in ("manifest.csv", "labels.json"):
                 (prepared / filename).touch()
-        with patch.dict(os.environ, {"ORCHARD_DATA": str(self.root / "storage with spaces")}):
+        with patch.dict(os.environ, {"LEAFIT_DATA": str(self.root / "storage with spaces")}):
             for options, folder in (([], "storage with spaces"),
                                     (["--data-root", str(self.root / "explicit override")], "explicit override")):
                 with self.subTest(folder=folder), patch("train.train") as trainer:
@@ -51,8 +51,8 @@ class TrainingTests(unittest.TestCase):
             (output / name).write_bytes(content)
         args = train_cli.build_parser().parse_args(["--output", str(output)])
 
-        with patch("orchard.model.validate_training_output", wraps=validate_training_output) as guard:
-            with patch("orchard.model.timm.create_model") as create_model:
+        with patch("leafit.model.validate_training_output", wraps=validate_training_output) as guard:
+            with patch("leafit.model.timm.create_model") as create_model:
                 with self.assertRaisesRegex(ValueError, "new or empty folder"):
                     train(args)
                 guard.assert_called_once_with(output)

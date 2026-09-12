@@ -1,4 +1,4 @@
-"""Turn an Orchard training run's saved numbers into a report and learning curves.
+"""Turn a Leaf It to Me training run's saved numbers into a report and learning curves.
 
 Run from the project folder: uv run python scripts/summarize_training.py
 This reads saved results only; it never trains a model or predicts an image.
@@ -76,7 +76,7 @@ def plot_curves(history, best_epoch, output):
         axis.set(xlabel="Epoch (one pass through training data)", xticks=epochs)
         axis.grid(alpha=0.2)
         axis.legend(fontsize=8)
-    figure.suptitle("Orchard learning curves")
+    figure.suptitle("Leaf It to Me learning curves")
     figure.tight_layout()
     figure.savefig(output / "learning_curves.png", dpi=160)
     plt.close(figure)
@@ -85,7 +85,7 @@ def plot_curves(history, best_epoch, output):
 def make_report(run, history, metrics, config, data, classes, matrix):
     best = next(entry for entry in history if entry["epoch"] == metrics["best_epoch"])
     smoke = bool(config.get("max_batches", 0) or config.get("smoke", False))
-    lines = ["# Orchard training results", "",
+    lines = ["# Leaf It to Me training results", "",
              f"Run: `{run}`", "",
              "**Smoke test only:** training was limited to a few batches. These results check the code; "
              "they do not describe a fully trained model." if smoke else
@@ -164,7 +164,7 @@ def make_report(run, history, metrics, config, data, classes, matrix):
               "Mango grouping is approximate: camera metadata and visual similarity cannot certify that all photographs "
               "of the same physical leaf were found. When Mango appears in validation or test, treat those scores as exploratory.", "",
               "A model score is a softmax score among known labels, not a calibrated probability or a confirmed diagnosis. "
-              "Performance on these test photos does not establish performance on new orchard conditions.", "",
+              "Performance on these test photos does not establish performance on new growing conditions.", "",
               "Source artifacts: `history.json`, `metrics.json`, `per_class.csv`, `confusion_matrix.csv`, "
               "`run_config.json`, and `data_summary.json` in the run folder above. This report performs no new training or inference.", ""]
     return "\n".join(lines)

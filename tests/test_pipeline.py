@@ -20,9 +20,9 @@ from PIL import Image
 import timm
 import torch
 
-from orchard.model import freeze_backbone, load_rgb, make_loader, metrics_from_confusion, read_manifest
-from orchard.prepare import UnionFind, assign_splits, connect_related, fingerprint, import_cornell, make_row, prepare
-from orchard.smoke import make_fixture
+from leafit.model import freeze_backbone, load_rgb, make_loader, metrics_from_confusion, read_manifest
+from leafit.prepare import UnionFind, assign_splits, connect_related, fingerprint, import_cornell, make_row, prepare
+from leafit.smoke import make_fixture
 
 
 class PipelineTests(unittest.TestCase):

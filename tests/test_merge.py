@@ -45,7 +45,7 @@ class MergeCommandTests(unittest.TestCase):
         environment_root = self.root / "storage with spaces"
         environment_root.mkdir()
         (self.root / "data").rename(environment_root / "data")
-        with patch.dict(os.environ, {"ORCHARD_DATA": str(environment_root)}):
+        with patch.dict(os.environ, {"LEAFIT_DATA": str(environment_root)}):
             with patch.object(merge_datasets, "prepare") as prepare, redirect_stdout(io.StringIO()):
                 self.assertEqual(merge_datasets.main([]), 0)
             self.assertEqual(prepare.call_args.args[0].output, environment_root.resolve() / "data/prepared")

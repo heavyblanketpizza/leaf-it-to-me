@@ -1,4 +1,4 @@
-"""Command line entry point: python -m orchard --help."""
+"""Command line entry point: python -m leafit --help."""
 import argparse
 import os
 from pathlib import Path

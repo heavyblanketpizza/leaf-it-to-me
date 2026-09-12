@@ -14,10 +14,10 @@ uv sync --locked
 uv run python merge_datasets.py
 ```
 
-The script reads `ORCHARD_DATA` from the environment, falling back to the current folder when it is unset or empty. `--data-root` overrides that setting. It uses the downloaded folders beneath `data/raw/` and writes the result to:
+The script reads `LEAFIT_DATA` from the environment, falling back to the current folder when it is unset or empty. `--data-root` overrides that setting. It uses the downloaded folders beneath `data/raw/` and writes the result to:
 
 ```text
-$ORCHARD_DATA/data/prepared/
+$LEAFIT_DATA/data/prepared/
 ├── manifest.csv
 ├── labels.json
 ├── report.json
@@ -33,8 +33,8 @@ To choose a separate output folder beneath the configured storage root:
 
 ```bash
 uv run python merge_datasets.py \
-  --data-root "$ORCHARD_DATA" \
-  --output "$ORCHARD_DATA/data/prepared-experiment" \
+  --data-root "$LEAFIT_DATA" \
+  --output "$LEAFIT_DATA/data/prepared-experiment" \
   --seed 42
 ```
 
@@ -146,7 +146,7 @@ The default `merge_datasets.py` command uses `--mango-policy deduplicate`. It jo
 
 These are representatives of automatically detected families, not verified originals or a verified count of physical leaves. Similarity and capture timestamps can miss related photos or join separate photos. The report keeps `mango_groups_completely_reviewed` false unless complete manual group coverage was actually supplied. A reviewed `--groups` CSV can improve grouping; the audit explains the remaining limitations in [MANGO_AUDIT.md](MANGO_AUDIT.md).
 
-Use `uv run python merge_datasets.py --mango-policy train-only` to keep Mango in training unless complete reviewed groups are supplied. The lower-level `uv run python -m orchard prepare` command still defaults to `train-only`; pass `--mango-policy deduplicate` when using it to select and split Mango representatives.
+Use `uv run python merge_datasets.py --mango-policy train-only` to keep Mango in training unless complete reviewed groups are supplied. The lower-level `uv run python -m leafit prepare` command still defaults to `train-only`; pass `--mango-policy deduplicate` when using it to select and split Mango representatives.
 
 ## Audit files: how preparation made its choices
 

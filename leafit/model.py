@@ -1,4 +1,4 @@
-"""A small two-stage image classifier; run through ``python -m orchard``.
+"""A small two-stage image classifier; run through ``python -m leafit``.
 
 The backbone learns visual patterns. The head turns those patterns into one
 score for each combined tree/condition label. Imports here require the ML extras.
@@ -476,7 +476,7 @@ def add_commands(subparsers):
 
 
 def training_arguments(parser):
-    """Share the same training options between train.py and python -m orchard."""
+    """Share the same training options between train.py and python -m leafit."""
     parser.add_argument("--manifest", default="data/prepared/manifest.csv")
     parser.add_argument("--labels", default="data/prepared/labels.json")
     parser.add_argument("--output", default="runs/weekend")

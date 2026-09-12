@@ -1,11 +1,11 @@
 # Store datasets locally or on an external drive
 
 The code and Python environment live in the project folder. Dataset storage can
-be in the same folder or on another drive. Set `ORCHARD_DATA` in your private
+be in the same folder or on another drive. Set `LEAFIT_DATA` in your private
 `.env` to the folder containing `data/`, then load it as described in the
 [README](../README.md). The default template uses the current project folder.
 
-The expected layout under `ORCHARD_DATA` is:
+The expected layout under `LEAFIT_DATA` is:
 
 | Folder | Contents |
 |---|---|

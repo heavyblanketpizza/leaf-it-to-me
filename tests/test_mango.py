@@ -13,9 +13,9 @@ from types import SimpleNamespace
 
 from PIL import Image
 
-from orchard.mango import curate_mango
-from orchard.prepare import UnionFind, make_row, prepare
-from orchard.smoke import make_fixture
+from leafit.mango import curate_mango
+from leafit.prepare import UnionFind, make_row, prepare
+from leafit.smoke import make_fixture
 
 
 class MangoCurationTests(unittest.TestCase):

@@ -1,5 +1,5 @@
 [project]
-name = "orchard"
+name = "leaf-it-to-me"
 version = "0.1.0"
 description = "A weekend MobileNetV4 experiment with tree leaf photographs"
 readme = "README.md"

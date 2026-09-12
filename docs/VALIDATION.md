@@ -47,7 +47,7 @@ After dependencies are installed, this command needs no dataset or weight
 downloads:
 
 ```bash
-uv run python -m orchard smoke --no-pretrained --device cpu \
+uv run python -m leafit smoke --no-pretrained --device cpu \
   --output runs/smoke-offline
 ```
 
@@ -108,8 +108,8 @@ saved checkpoint again, use the same prepared manifest and a separate output
 folder:
 
 ```bash
-uv run python -m orchard evaluate --checkpoint runs/weekend/best.pt \
-  --manifest "${ORCHARD_DATA:-.}/data/prepared/manifest.csv" \
+uv run python -m leafit evaluate --checkpoint runs/weekend/best.pt \
+  --manifest "${LEAFIT_DATA:-.}/data/prepared/manifest.csv" \
   --output runs/weekend-evaluation
 ```
 
@@ -123,6 +123,7 @@ runs; accelerator differences can still affect results.
 
 A held-out result measures this dataset split. Mango's automatic groups may miss
 related leaves, and orange contains citrus greening examples without healthy
-orange examples. Real orchard photos can also differ from the training photos.
+orange examples. Photos of fruit trees in other growing conditions can also
+differ from the training photos.
 Keep these limitations with any results you choose to share. Dataset provenance
 and license information are in [SOURCES.md](SOURCES.md).

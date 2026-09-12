@@ -75,7 +75,7 @@ uv run python train.py --smoke
 ```
 
 The script reads `data/prepared/manifest.csv` and the adjacent `labels.json`
-under `ORCHARD_DATA`. If that variable is unset or empty, it uses the current
+under `LEAFIT_DATA`. If that variable is unset or empty, it uses the current
 folder. The CSV points to the original photos, so their storage must stay
 available. `--data-root` overrides the storage setting; `--manifest` and
 `--labels` can select individual prepared files. For a one-off training command
@@ -192,17 +192,17 @@ Training evaluates the best checkpoint automatically. After you have completed
 a run, you can reproduce its test report using the same manifest:
 
 ```bash
-uv run python -m orchard evaluate --checkpoint runs/weekend/best.pt \
-  --manifest "${ORCHARD_DATA:-.}/data/prepared/manifest.csv" \
+uv run python -m leafit evaluate --checkpoint runs/weekend/best.pt \
+  --manifest "${LEAFIT_DATA:-.}/data/prepared/manifest.csv" \
   --output runs/weekend-evaluation
 ```
 
-To predict from your own close-up leaf photo, set `ORCHARD_IMAGE` in `.env`,
+To predict from your own close-up leaf photo, set `LEAFIT_IMAGE` in `.env`,
 reload it using the commands in section 1, and run:
 
 ```bash
-uv run python -m orchard predict --checkpoint runs/weekend/best.pt \
-  --image "$ORCHARD_IMAGE"
+uv run python -m leafit predict --checkpoint runs/weekend/best.pt \
+  --image "$LEAFIT_IMAGE"
 ```
 
 The JSON result includes tree type, condition, combined label, and model score.
