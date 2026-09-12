@@ -132,3 +132,6 @@ Thumbs.db
 .codex/
 .agents/
 docs/local/
+
+# Only this reviewed, flattened README artwork is shared; originals stay in docs/local/.
+!/docs/assets/orchard-banner.webp

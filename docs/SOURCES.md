@@ -13,11 +13,14 @@ mkdir -p "$ORCHARD_DATA/data/raw" "$ORCHARD_DATA/downloads"
 
 ## License scope and attribution
 
-The repository's [MIT license](../LICENSE) covers its original code and
-documentation. It does not grant rights to the source datasets, label tables,
-image inventories, pretrained weights, or third-party packages. Dataset photos,
-archives, labels, and derived per-image manifests are kept out of Git; the
-tables below document the source releases and category selection.
+Publishing this repository shares original code and documentation under
+[MIT](../LICENSE); datasets, model weights, and dependencies retain their own
+terms. Training uses the datasets and pretrained weights under those terms,
+including MangoLeafBD's noncommercial condition. Demonstrating predictions is
+a separate use from distributing the data or weights: consider the purpose of
+the demonstration and the terms for any source images shown. Dataset licenses
+do not automatically become the model's license; [Creative Commons' AI guidance](https://creativecommons.org/using-cc-licensed-works-for-ai-training-2/)
+explains when copyright permission and license conditions apply.
 
 Please credit the original sources:
 
@@ -161,6 +164,13 @@ The starting checkpoint is
 trained on ImageNet-1k by Ross Wightman. Its model card lists Apache 2.0. The
 project uses these pretrained weights as a starting point and fine-tunes them
 on the three leaf datasets above. It does not download ImageNet training images.
+
+[timm's licensing guidance](https://github.com/huggingface/pytorch-image-models#licenses)
+notes that the implications of [ImageNet's noncommercial research and education
+terms](https://image-net.org/download.php) for pretrained weights are unclear,
+and recommends assuming those restrictions apply. The model card's Apache 2.0
+designation alone does not resolve this upstream rights question; the guidance
+does not establish that dataset restrictions automatically transfer to weights.
 
 Downloaded weights stay in `.cache/`; fine-tuned checkpoints stay in `runs/`.
 Neither is included in Git or relicensed by this project's MIT license.

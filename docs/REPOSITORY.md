@@ -13,6 +13,7 @@ obtains the datasets separately and creates their own training outputs.
   the MIT license, and the sanitized `.env.example` template.
 - Setup and execution guides, class definitions and mapping logic, file schemas,
   data-preparation methods, source attribution, and known limitations.
+- The flattened README banner.
 
 Dataset preparation updates belong here as code and methodology. The resulting
 photos, source annotations, and per-image manifests stay local. See
@@ -27,6 +28,7 @@ for the generated file format.
 | Prepared per-image records | Manifests, split/group assignments, duplicate audits, prediction records | They can contain source annotations, image paths, and metadata. |
 | Model artifacts | Pretrained weights, fine-tuned checkpoints, exported models | The code's MIT license does not grant rights to these weights. |
 | Run history | Configurations, logs, metrics, plots, source snapshots, experiment journals | These describe a particular local run and may expose machine paths. |
+| Original README artwork | Stock photographs, SVG sheets, isolated icons, and license records in `docs/local/` | The stock license does not allow redistribution of original or editable resources. |
 | Private settings | `.env`, API tokens, Kaggle credentials, key files | These are personal configuration or secrets. |
 | Installed and temporary files | Virtual environments, caches, build output, editor settings | Users create these locally from the shared source and lockfiles. |
 
@@ -49,7 +51,7 @@ Mango grouping, and the lack of healthy-orange examples belong in the public
 guides because they affect everyone's use of the code.
 
 A sanitized aggregate-results table or chart is optional documentation.
-Excluding all generated images, CSVs, and reports is this repository's chosen
+Excluding dataset images, generated CSVs, and raw reports is this repository's chosen
 scope, not a blanket rule that every such file is legally unpublishable. A
 separately prepared benchmark can describe its data, settings, and limitations
 without bundling model weights. Review its source terms and contents before

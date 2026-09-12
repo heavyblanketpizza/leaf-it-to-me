@@ -1,5 +1,9 @@
 # Leaf It to Me
 
+English | [한국어](README.ko.md)
+
+![Apple, cherry, mango, orange, and peach: outdoor tree photographs with matching colorful fruit icons.](docs/assets/orchard-banner.webp)
+
 A Python experiment that learns to identify **apple, cherry, mango, orange,
 and peach trees from photographs of their leaves**, then classify the leaf's
 condition. It uses MobileNetV4, a small image-classification model, with
@@ -92,9 +96,8 @@ images before preparation filters unreadable or related copies:
 | [Plant Pathology 2020 / FGVC7 (Cornell)](https://www.kaggle.com/competitions/plant-pathology-2020-fgvc7/data) | Apple leaves with public `train.csv` labels | 1,821 | Apache 2.0 plus the [competition rules](https://www.kaggle.com/competitions/plant-pathology-2020-fgvc7/rules), which take precedence |
 | [MangoLeafBD v1](https://data.mendeley.com/datasets/hxsnvwty3r/1) | Mango leaves in eight categories, including supplied augmentations | 4,000 | CC BY-NC 3.0 |
 
-**Datasets are not included in this repository.** Download your own copies from
-the authors and follow their terms. [Source credits and download details](docs/SOURCES.md)
-include pinned revisions, source inventories, and manual-download alternatives.
+Download the original releases below. The [source guide](docs/SOURCES.md)
+includes credits, pinned revisions, and manual-download alternatives.
 
 With `.env` loaded, create the storage folders and download PlantVillage:
 
@@ -168,8 +171,7 @@ uv run python train.py
 
 Training starts from timm's ImageNet-1k pretrained checkpoint. It teaches the
 final classification layer for two **epochs**—passes through the training
-photos—then adjusts the whole model for three more. ImageNet images are not
-downloaded by this project.
+photos—then adjusts the whole model for three more.
 
 The short check saves to `runs/training-smoke`; normal training saves to
 `runs/weekend`. Every run needs a new or empty output folder. For another run
@@ -257,24 +259,21 @@ Raw reports, datasets, and model weights remain excluded from Git.
 - Scores on these datasets do not establish performance in a new garden or
   orchard. A model score is not a confirmed diagnosis.
 
-## What stays out of Git
+## License and scope
 
-Dataset photos, source label files, image inventories, archives, prepared
-manifests, pretrained weights, and trained models stay local. `.gitignore` also
-excludes private `.env` settings, credentials, caches, logs, and generated
-reports. Keep data in `data/` and results in `runs/` or `outputs/`.
+This personal learning project shares original code and documentation under
+[MIT](LICENSE). Training uses datasets and pretrained weights under their own
+terms. The README banner is excluded from the MIT license.
+Demonstrating predictions is a separate use from distributing those materials;
+follow the terms for any source images shown. See the
+[source guide](docs/SOURCES.md#license-scope-and-attribution), including
+[timm's ImageNet caveat](docs/SOURCES.md#pretrained-model-and-dependencies).
 
-The repository shares code, documentation, dependency specifications, and the
-generic `.env.example`. Tests generate synthetic fixtures at runtime.
-See the [repository contents guide](docs/REPOSITORY.md) for file-selection rules.
+Datasets, model weights, private settings, and raw run outputs stay local via
+[`.gitignore`](.gitignore). The [repository guide](docs/REPOSITORY.md) lists
+what belongs in Git.
 
-## License and development
-
-Original code and documentation are licensed under [MIT](LICENSE). Datasets,
-pretrained weights, and
-third-party packages retain their own terms. MangoLeafBD is noncommercial;
-Cornell access and redistribution remain subject to its competition rules.
-See [source credits and terms](docs/SOURCES.md).
+## Development
 
 Start with `merge_datasets.py` and `train.py`. The `orchard/` package contains
 preparation, training, evaluation, and prediction; `scripts/` contains import
