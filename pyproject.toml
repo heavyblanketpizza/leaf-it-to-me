@@ -1,0 +1,27 @@
+[project]
+name = "orchard"
+version = "0.1.0"
+description = "A weekend MobileNetV4 experiment with tree leaf photographs"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch==2.14.0",
+    "torchvision==0.29.0",
+    "timm==1.0.29",
+    "Pillow==12.3.0",
+    "ImageHash==4.3.2",
+    "numpy==2.5.3",
+    "scikit-learn==1.9.1",
+    "matplotlib==3.11.2",
+    "huggingface-hub==1.31.0",
+]
+
+[project.urls]
+Repository = "https://github.com/heavyblanketpizza/leaf-it-to-me"
+
+[tool.uv]
+# Run the local scripts directly; this experiment does not need a package build.
+package = false
+cache-dir = ".cache/uv"
