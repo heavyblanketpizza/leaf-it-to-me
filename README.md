@@ -223,6 +223,29 @@ If you move the datasets, update `.env`, reload it, and rebuild the manifest
 with `merge_datasets.py`: it stores absolute photo paths. Prediction only needs
 the saved model and the chosen photo.
 
+## First full training run
+
+Completed September 12, 2026, using all 18 labels across the five fruit trees.
+The split contained **14,929 training**, **1,867 validation**, and
+**1,866 test** images.
+
+| Stage | Epochs | Learning rate |
+|---|---:|---:|
+| Train the classification layer; keep the backbone frozen | 2 | 0.001 |
+| Fine-tune the whole model | 3 | 0.0001 |
+
+Configuration: ImageNet-pretrained `mobilenetv4_conv_small.e2400_r224_in1k`,
+**224 × 224 RGB** input, **batch size 16**, AdamW with weight decay **0.0001**,
+seed **42**, and the **MPS** backend. All training batches were used.
+
+Validation selected **epoch 4**, during fine-tuning, with macro F1 **0.9201**.
+That checkpoint achieved **97.96% test accuracy** (1,828 of 1,866 images)
+and **0.9417 test macro F1** across all 18 labels.
+
+These figures come from the saved `runs/weekend` reports. They describe the
+prepared dataset split; the Mango grouping limitations below still apply.
+Raw reports, datasets, and model weights remain excluded from Git.
+
 ## Limitations
 
 - The model always chooses a known label, including for unfamiliar trees or
